@@ -1,0 +1,18 @@
+body{
+    background-color: #fdf2e7;
+}
+.btn-orange {
+    color: #fff;
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+}
+
+.btn-orange:hover {
+    color: #fff;
+    background-color: #e3690f;
+    border-color: #e3690f;
+}
+.link_registrar{
+    text-decoration: none;
+    color: #FF914D;
+}
