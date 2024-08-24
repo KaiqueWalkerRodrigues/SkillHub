@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <form action="?" method="post">
             <div class="row">
-                <div class="col-4 position-absolute top-50 start-50 translate-middle">
+                <div class="col-3 position-absolute top-50 start-50 translate-middle">
                     <div class="card p-4" style="border-radius: 15px">
                         <div class="text-center">
                             <img src="img/logo.png" style="width: 60%;" alt="">
@@ -29,9 +29,9 @@
                         <div class="mb-4 text-end">
                             <button type="submit" class="btn btn-orange" style="border-radius: 15px">Entrar</button>
                         </div>
-                        <div class="text-center">
+                        <!-- <div class="text-center">
                             <a href="registrar.php" class="link_registrar">Não tem uma conta? <b>Cadastrar-se</b></a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
