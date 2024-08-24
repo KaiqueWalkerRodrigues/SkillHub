@@ -1,6 +1,10 @@
 body{
     background-color: #fdf2e7;
 }
+.text-orange{
+    color: #fd7e14;
+}
+
 .btn-orange {
     color: #fff;
     background-color: #fd7e14;
