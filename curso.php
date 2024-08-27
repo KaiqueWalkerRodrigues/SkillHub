@@ -80,10 +80,7 @@
                 <div class="modal-body">
                     <!-- Player de vídeo local -->
                     <div class="ratio ratio-16x9">
-                        <video controls>
-                            <source src="cursos/1/aula1.mp4" type="video/mp4">
-                            Seu navegador não suporta a tag de vídeo.
-                        </video>
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/oCNV0lXfXU0?si=1hSQUbZS2IacPGLi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
