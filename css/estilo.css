@@ -1,8 +1,9 @@
-body{
-    background-color: #fdf2e7;
-}
 .text-orange{
     color: #fd7e14;
+}
+
+.navbar-laranja {
+    background-color: #fd7e14; /* Cor laranja */
 }
 
 .btn-orange {
@@ -25,6 +26,7 @@ body{
     sans-serif;font-weight: 400;
     font-style: normal;
     font-size: 30px;
+    color: white;
 }
 
 .curso {
@@ -34,3 +36,21 @@ body{
 a:hover .curso {
     transform: scale(1.05);
 }
+
+.desativado {
+    pointer-events: none; 
+    opacity: 0.5;
+    filter: grayscale(100%); 
+}
+
+#pesquisar {
+    border: 1px solid #333; /* Borda escura */
+    color: #333; /* Texto escuro */
+    padding: 10px;
+    border-radius: 15px;
+}
+
+#pesquisar::placeholder {
+    color: #666; 
+}
+
