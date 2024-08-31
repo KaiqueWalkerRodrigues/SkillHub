@@ -6,8 +6,19 @@
     <title>SkillHub - Login</title>
 
     <?php include_once('link.php') ?>
+    <style>
+        body{
+                background: linear-gradient(180deg, rgba(253,126,20,1) 0%, rgba(255,255,255,1) 100%);
+                min-height: 100vh;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+    </style>
 </head>
-<body>
+<body style="background-color: #FFD3B5;">
 
     <div class="container-fluid">
         <form action="?" method="post">
@@ -27,11 +38,10 @@
                             <input type="text" class="form-control" name="senha" style="background-color: lightgrey;">
                         </div>
                         <div class="mb-4 text-end">
-                            <button type="submit" class="btn btn-orange" style="border-radius: 15px">Entrar</button>
+                            <!-- <button type="submit" class="btn btn-orange" style="border-radius: 15px">Entrar</button> -->
+                            <a href="portal" class="btn btn-orange" style="border-radius: 15px">Entrar</a>
                         </div>
-                        <!-- <div class="text-center">
-                            <a href="registrar.php" class="link_registrar">Não tem uma conta? <b>Cadastrar-se</b></a>
-                        </div> -->
+
                     </div>
                 </div>
             </div>

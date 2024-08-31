@@ -14,54 +14,60 @@
     ?>
 
 <div class="container mt-4">
-        <a href="index.php" class="btn btn-secondary mb-2">Voltar</a>
-        <div class="card p-4">
+        <a href="portal" class="btn btn-secondary mb-2">Voltar</a>
+        <div class="p-4">
             <h3>Introdução ao Uso de Computadores</h3>
             <br>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iure ab porro hic officia ipsam quibusdam tenetur eius, odio harum? Soluta, culpa placeat magni laboriosam eligendi consectetur? Dignissimos rem aut labore.</p>
             <br>
             <div class="row">
-                <div class="row col-8 offset-2 text-center">
+                <div class="row">
 
                     <div class="row mb-4" id="aula1">
-                        <h4 style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Aula 1</h4>
-                        <div class="col-6">
+                        <div class="col-3">
                             <!-- Botão que abre o modal -->
                             <a href="#" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#videoModal">
-                                <h5 class="text-center">Vídeo Aula</h5>
+                                <h5 class="text-center">Aula 1</h5>
                                 <div class="card curso p-3" style="width: 18rem; margin: 0 auto;">
                                     <img src="cursos/1/miniatura1.png" class="card-img-top" alt="">
                                 </div>
                             </a>
                         </div>
-                        <div class="col-6">
-                            <a href="" style="text-decoration: none;" id="abrirQuiz" data-bs-toggle="modal" data-bs-target="#quizModal">
-                                <h5 class="text-center">Quiz</h5>
+                        <div class="col-3">
+                            <!-- Botão que abre o modal -->
+                            <a href="#" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#videoModal">
+                                <h5 class="text-center">Aula 2</h5>
                                 <div class="card curso p-3" style="width: 18rem; margin: 0 auto;">
-                                    <img src="quiz.jpg" class="card-img-top" alt="">
+                                    <img src="cursos/1/miniatura1.png" class="card-img-top" alt="">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            <!-- Botão que abre o modal -->
+                            <a href="#" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#videoModal">
+                                <h5 class="text-center">Aula 3</h5>
+                                <div class="card curso p-3" style="width: 18rem; margin: 0 auto;">
+                                    <img src="cursos/1/miniatura1.png" class="card-img-top" alt="">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            <!-- Botão que abre o modal -->
+                            <a href="#" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#videoModal">
+                                <h5 class="text-center">Aula 4</h5>
+                                <div class="card curso p-3" style="width: 18rem; margin: 0 auto;">
+                                    <img src="cursos/1/miniatura1.png" class="card-img-top" alt="">
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row mb-4 desativado" id="aula2">
-                        <h4 style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Aula 2</h4>
-                        <div class="col-6">
-                            <a href="#" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#videoModal">
-                                <h5 class="text-center">Vídeo Aula</h5>
-                                <div class="card curso p-3" style="width: 18rem; margin: 0 auto;">
-                                    <img src="cursos/1/miniatura2.png" class="card-img-top" alt="">
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-6">
-                            <a href="" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#quizModal">
-                                <h5 class="text-center">Quiz</h5>
-                                <div class="card curso p-3" style="width: 18rem; margin: 0 auto;">
-                                    <img src="quiz.jpg" class="card-img-top" alt="">
-                                </div>
-                            </a>
-                        </div>
+                    <div class="col-6 offset-3 mt-3">
+                        <a href="" style="text-decoration: none;" id="abrirQuiz" data-bs-toggle="modal" data-bs-target="#quizModal">
+                            <h5 class="text-center">Quiz do Curso</h5>
+                            <div class="card curso p-3" style="width: 18rem; margin: 0 auto;">
+                                <img src="quiz.jpg" class="card-img-top" alt="">
+                            </div>
+                        </a>
                     </div>
 
                 </div>
@@ -91,7 +97,7 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="quizModalLabel">Aula 1 - Introdução ao Uso de Computadores</h5>
+                        <h5 class="modal-title" id="quizModalLabel">Questionario Curso 1</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -118,11 +124,6 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script>
-        $('#abrirQuiz').on('click', function(){
-            $('#aula2').removeClass('desativado');
-        });
-    </script>
 
     <!-- Scripts do Bootstrap (necessário para o funcionamento do modal) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gyb7m00IVIyjDZHn2gFp51RoShbZp6NAM0CfaQrZy0pP4pEP8s" crossorigin="anonymous"></script>

@@ -29,6 +29,10 @@
     color: white;
 }
 
+:hover .navbar-brand{
+    color: white;
+}
+
 .curso {
     transition: transform 0.3s ease;
 }
