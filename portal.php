@@ -6,6 +6,14 @@
     <title>SkillHub - Ínicio</title>
 
     <?php include_once('link.php') ?>
+    <style>
+        .card-title{
+            font-family: "Inconsolata", monospace;
+        }
+        body{
+            font-family: "Open Sans", sans-serif;
+        }
+    </style>
 </head>
 <body>
 

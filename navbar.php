@@ -10,9 +10,9 @@
         </form>
       </div>
       <div class="col-3 offset-1 text-center row">
-          <!-- <div class="col-4 offset-3" style="margin-right: -15px;">
+          <div class="col-4 offset-3" style="margin-right: -15px;">
             <a class="nav-link" aria-current="page" href="sobrenos.php" style="font-weight: bolder;color:white;font-size: 18px;">Sobre Nós</a>
-          </div> -->
+          </div>
       </div>
     </div>
   </div>
