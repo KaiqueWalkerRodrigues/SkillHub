@@ -1,3 +1,10 @@
+<?php 
+    include_once('class/classes.php');
+
+    $Cursos = new Curso();
+
+    $curso = $Cursos->mostrar($_GET['id']);
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -18,7 +25,7 @@
         <div class="p-4">
             <h3>Introdução ao Uso de Computadores</h3>
             <br>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iure ab porro hic officia ipsam quibusdam tenetur eius, odio harum? Soluta, culpa placeat magni laboriosam eligendi consectetur? Dignissimos rem aut labore.</p>
+            <?php echo $curso->descricao ?>
             <br>
             <div class="row">
                 <div class="row">
@@ -29,7 +36,7 @@
                             <a href="#" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#videoModal">
                                 <h5 class="text-center">Aula 1</h5>
                                 <div class="card curso p-3" style="width: 18rem; margin: 0 auto;">
-                                    <img src="cursos/1/miniatura1.png" class="card-img-top" alt="">
+                                    <img src="img/miniatura1.png" class="card-img-top" alt="">
                                 </div>
                             </a>
                         </div>
@@ -38,7 +45,7 @@
                             <a href="#" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#videoModal">
                                 <h5 class="text-center">Aula 2</h5>
                                 <div class="card curso p-3" style="width: 18rem; margin: 0 auto;">
-                                    <img src="cursos/1/miniatura1.png" class="card-img-top" alt="">
+                                    <img src="img/miniatura1.png" class="card-img-top" alt="">
                                 </div>
                             </a>
                         </div>
@@ -47,7 +54,7 @@
                             <a href="#" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#videoModal">
                                 <h5 class="text-center">Aula 3</h5>
                                 <div class="card curso p-3" style="width: 18rem; margin: 0 auto;">
-                                    <img src="cursos/1/miniatura1.png" class="card-img-top" alt="">
+                                    <img src="img/miniatura1.png" class="card-img-top" alt="">
                                 </div>
                             </a>
                         </div>
@@ -56,7 +63,7 @@
                             <a href="#" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#videoModal">
                                 <h5 class="text-center">Aula 4</h5>
                                 <div class="card curso p-3" style="width: 18rem; margin: 0 auto;">
-                                    <img src="cursos/1/miniatura1.png" class="card-img-top" alt="">
+                                    <img src="img/miniatura1.png" class="card-img-top" alt="">
                                 </div>
                             </a>
                         </div>

@@ -1,3 +1,8 @@
+<?php 
+    include_once('class/classes.php');
+
+    $Cursos = new Curso();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -26,95 +31,24 @@
 
             <h2 style="font-weight: bolder;">Cursos</h2>
             <hr>
-
+            <?php 
+                foreach($Cursos->listar() as $curso){
+            ?>
+      
             <div class="col-3 mb-5">
-                <a href="curso" style="text-decoration: none;">
+                <a href="curso?id=<?php echo $curso->id_curso ?>" style="text-decoration: none;">
                     <div class="card curso w-100 p-3" style="width: 18rem;border-radius: 15px">
-                    <img style="border-radius: 15px" src="https://pplware.sapo.pt/wp-content/uploads/2021/04/computadores.jpg" class="card-img-top" alt="">
+                    <img style="border-radius: 15px" src="<?php echo $curso->imagem ?>" class="card-img-top" alt="">
                         <div class="card-body text-center">
-                            <h5 class="card-title">Introdução ao Uso de Computadores</h5>
+                            <h5 class="card-title"><?php echo $curso->nome ?></h5>
                             <button class="btn btn-orange mt-3">Acessar</button>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="col-3 mb-5">
-                <a href="#" style="text-decoration: none;">
-                    <div class="card curso w-100 p-3" style="width: 18rem;border-radius: 15px">
-                    <img style="border-radius: 15px" src="https://pplware.sapo.pt/wp-content/uploads/2021/04/computadores.jpg" class="card-img-top" alt="">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Introdução ao Uso de Computadores</h5>
-                            <button class="btn btn-orange mt-3">Acessar</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 mb-5">
-                <a href="#" style="text-decoration: none;">
-                    <div class="card curso w-100 p-3" style="width: 18rem;border-radius: 15px">
-                    <img style="border-radius: 15px" src="https://pplware.sapo.pt/wp-content/uploads/2021/04/computadores.jpg" class="card-img-top" alt="">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Introdução ao Uso de Computadores</h5>
-                            <button class="btn btn-orange mt-3">Acessar</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 mb-5">
-                <a href="#" style="text-decoration: none;">
-                    <div class="card curso w-100 p-3" style="width: 18rem;border-radius: 15px">
-                    <img style="border-radius: 15px" src="https://pplware.sapo.pt/wp-content/uploads/2021/04/computadores.jpg" class="card-img-top" alt="">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Introdução ao Uso de Computadores</h5>
-                            <button class="btn btn-orange mt-3">Acessar</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 mb-5">
-                <a href="#" style="text-decoration: none;">
-                    <div class="card curso w-100 p-3" style="width: 18rem;border-radius: 15px">
-                    <img style="border-radius: 15px" src="https://pplware.sapo.pt/wp-content/uploads/2021/04/computadores.jpg" class="card-img-top" alt="">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Introdução ao Uso de Computadores</h5>
-                            <button class="btn btn-orange mt-3">Acessar</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 mb-5">
-                <a href="#" style="text-decoration: none;">
-                    <div class="card curso w-100 p-3" style="width: 18rem;border-radius: 15px">
-                    <img style="border-radius: 15px" src="https://pplware.sapo.pt/wp-content/uploads/2021/04/computadores.jpg" class="card-img-top" alt="">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Introdução ao Uso de Computadores</h5>
-                            <button class="btn btn-orange mt-3">Acessar</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 mb-5">
-                <a href="#" style="text-decoration: none;">
-                    <div class="card curso w-100 p-3" style="width: 18rem;border-radius: 15px">
-                    <img style="border-radius: 15px" src="https://pplware.sapo.pt/wp-content/uploads/2021/04/computadores.jpg" class="card-img-top" alt="">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Introdução ao Uso de Computadores</h5>
-                            <button class="btn btn-orange mt-3">Acessar</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 mb-5">
-                <a href="#" style="text-decoration: none;">
-                    <div class="card curso w-100 p-3" style="width: 18rem;border-radius: 15px">
-                    <img style="border-radius: 15px" src="https://pplware.sapo.pt/wp-content/uploads/2021/04/computadores.jpg" class="card-img-top" alt="">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Introdução ao Uso de Computadores</h5>
-                            <button class="btn btn-orange mt-3">Acessar</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            <?php 
+                };
+            ?>
 
         </div>
     </div>
