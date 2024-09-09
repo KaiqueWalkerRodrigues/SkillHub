@@ -34,18 +34,23 @@
         <div class="text-center">
             <div class="card p-5">
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-6">
                         <img src="img/quemsomos.png" alt="" style="width: 100%;">
+                        <b class="text-justify">
+                            Integrantes: Guilherme Guimas, Kaique Rodrigues, Kauê Martins, Marco Aurelio, Sobhia Y e Vinícius Salvador
+                        </b>
                     </div>
-                    <div class="col-7">
+                    <div class="col-6">
                         <h1 style="font-weight: bolder;color:black;">Quem somos?</h1>
                         <br>
                         <div class="row">
                             <div class="col-8 offset-2">
                                 <p class="text-justify">
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis numquam sed commodi dignissimos possimus perferendis saepe, distinctio sint eveniet laboriosam in? Corporis, aliquam est in pariatur enim dolor tempora culpa.
+                                    Bem-vindo à nossa plataforma de aprendizado digital! Somos um grupo de estudantes de Análise e Desenvolvimento de Sistemas do Centro Universitário Fundação Santo André, e nossa missão é democratizar o acesso ao conhecimento tecnológico. Criamos esta plataforma para ajudar quem nunca teve contato com computadores a desenvolver habilidades digitais básicas, essenciais para o dia a dia, visando uma educação acessível e prática.
                                 </p>
-                                
+                                <p class="text-justify">
+                                    Nosso trabalho é inspirado nas Metas de Desenvolvimento Sustentável (ODS) 4 e 9, que promovem a educação inclusiva e a inovação. Acreditamos que a inclusão digital é fundamental para o desenvolvimento individual e comunitário, e estamos aqui para tornar esse processo mais acessível. Seja bem-vindo à nossa jornada de aprendizado e descubra as oportunidades que a tecnologia pode oferecer!    
+                                </p>
                                 <p style="font-weight: bolder;">Para acessar o sistema você precisa primeiramente se registrar ou logar no nosso sistema, clique no botão abaixo</p>
                                 <a href="login" class="btn btn-orange">LOGAR</a>
                             </div>

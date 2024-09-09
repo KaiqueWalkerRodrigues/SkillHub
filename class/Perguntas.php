@@ -2,8 +2,8 @@
 
 class Pergunta {
 
-    # ATRIBUTOS	
-	public $pdo;
+    # ATRIBUTOS    
+    public $pdo;
     
     public function __construct()
     {
@@ -16,8 +16,9 @@ class Pergunta {
      * @return array Retorna um array de objetos contendo os dados das perguntas.
      * @example $perguntas = $obj->listar();
      */
-    public function listar(){
-        $sql = $this->pdo->prepare('SELECT * FROM perguntas ORDER BY id_pergunta');        
+    public function listar($id_quiz){
+        $sql = $this->pdo->prepare('SELECT * FROM perguntas WHERE id_quiz = :id_quiz ORDER BY id_pergunta');   
+        $sql->bindParam(':id_quiz',$id_quiz);     
         $sql->execute();
     
         // Pega todos os resultados da consulta
@@ -29,7 +30,7 @@ class Pergunta {
 
     /**
      * Cadastra uma nova pergunta
-     * @param array $dados Array contendo os dados da pergunta (id_quiz, pergunta, resposta_certa).
+     * @param array $dados Array contendo os dados da pergunta (id_quiz, pergunta).
      * @return int Retorna o ID da pergunta recém cadastrada.
      * @example $idPergunta = $obj->cadastrar($_POST);
      */
@@ -37,19 +38,17 @@ class Pergunta {
     {
         $id_quiz = $dados['id_quiz'];
         $pergunta = trim($dados['pergunta']);
-        $resposta_certa = trim($dados['resposta_certa']);
 
         // Prepara a query de inserção
         $sql = $this->pdo->prepare('INSERT INTO perguntas 
-                                    (id_quiz, pergunta, resposta_certa)
+                                    (id_quiz, pergunta)
                                     VALUES
-                                    (:id_quiz, :pergunta, :resposta_certa)
+                                    (:id_quiz, :pergunta)
                                 ');
 
         // Faz o binding dos parâmetros
         $sql->bindParam(':id_quiz', $id_quiz);          
         $sql->bindParam(':pergunta', $pergunta);          
-        $sql->bindParam(':resposta_certa', $resposta_certa);          
 
         // Executa a query
         $sql->execute();
@@ -66,16 +65,16 @@ class Pergunta {
      */
     public function mostrar(int $id_pergunta)
     {
-    	// Prepara a consulta
-    	$sql = $this->pdo->prepare('SELECT * FROM perguntas WHERE id_pergunta = :id_pergunta LIMIT 1');
+        // Prepara a consulta
+        $sql = $this->pdo->prepare('SELECT * FROM perguntas WHERE id_pergunta = :id_pergunta LIMIT 1');
         $sql->bindParam(':id_pergunta', $id_pergunta);
-    	
+        
         // Executa a consulta
-    	$sql->execute();
-    	
+        $sql->execute();
+        
         // Pega os dados retornados
-    	$dados = $sql->fetch(PDO::FETCH_OBJ);
-    	
+        $dados = $sql->fetch(PDO::FETCH_OBJ);
+        
         // Retorna o objeto com os dados da pergunta
         return $dados;
     }
@@ -91,20 +90,17 @@ class Pergunta {
     {
         $sql = $this->pdo->prepare("UPDATE perguntas SET
             id_quiz = :id_quiz,
-            pergunta = :pergunta, 
-            resposta_certa = :resposta_certa
+            pergunta = :pergunta
         WHERE id_pergunta = :id_pergunta
         ");
 
         // Faz o binding dos parâmetros
         $id_quiz = $dados['id_quiz'];
         $pergunta = trim($dados['pergunta']);
-        $resposta_certa = trim($dados['resposta_certa']);
         $id_pergunta = $dados['id_pergunta'];
 
         $sql->bindParam(':id_quiz', $id_quiz);
-        $sql->bindParam(':pergunta', $pergunta);
-        $sql->bindParam(':resposta_certa', $resposta_certa);       
+        $sql->bindParam(':pergunta', $pergunta);       
         $sql->bindParam(':id_pergunta', $id_pergunta);
 
         // Executa a consulta

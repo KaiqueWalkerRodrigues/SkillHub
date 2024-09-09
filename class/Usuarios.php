@@ -36,8 +36,9 @@ class Usuario {
     public function cadastrar(Array $dados)
     {
         $nome  = trim($dados['nome']);
-        $cpf = $dados['cpf'];
-        $usuario = $dados['usuario'];
+        $cpf = trim($dados['cpf']);
+        $cpf = preg_replace('/[^0-9]/', '', $cpf);
+        $usuario = strtolower(trim($dados['usuario']));
         $salt = 'Skill';
         $senha = crypt($dados['senha'], $salt);
 
@@ -58,7 +59,7 @@ class Usuario {
         $sql->execute();
 
         // Retorna o último ID inserido (ID do usuário cadastrado)
-        return $this->pdo->lastInsertId();
+        return header('location:/Skillhub/cadastrar_usuario?sucesso');
     }
 
     /**
@@ -134,6 +135,41 @@ class Usuario {
         // Executa a consulta
         $sql->execute();
     }
+
+    public function logar($usuario, $senha)
+    {
+        $usuario = strtolower($usuario);
+        // Prepara a consulta para buscar o usuário pelo nome de usuário
+        $sql = $this->pdo->prepare('SELECT * FROM usuarios WHERE usuario = :usuario LIMIT 1');
+        $sql->bindParam(':usuario', $usuario);
+        
+        // Executa a consulta
+        $sql->execute();
+        
+        // Pega os dados retornados
+        $dados = $sql->fetch(PDO::FETCH_OBJ);
+        
+        // Verifica se o usuário foi encontrado
+        if ($dados) {
+            $salt = 'Skill';
+            
+            // Verifica se a senha fornecida corresponde ao hash da senha no banco de dados
+            if (crypt($senha, $salt) == $dados->senha) {
+                // Login bem-sucedido
+                // Aqui, você pode definir a sessão do usuário, por exemplo:
+                session_start();
+                $_SESSION['usuario'] = $dados->usuario;
+                $_SESSION['id_usuario'] = $dados->id_usuario;
+                
+                return header('location:/SkillHub/portal');
+            } else {
+                return header('location:/SkillHub/login?erro');
+            }
+        } else {
+            return header('location:/SkillHub/login?erro');
+        }
+    }
+
 
 }
 

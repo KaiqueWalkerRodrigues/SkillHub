@@ -2,8 +2,8 @@
 
 class Resposta {
 
-    # ATRIBUTOS	
-	public $pdo;
+    # ATRIBUTOS    
+    public $pdo;
     
     public function __construct()
     {
@@ -16,8 +16,9 @@ class Resposta {
      * @return array Retorna um array de objetos contendo os dados das respostas.
      * @example $respostas = $obj->listar();
      */
-    public function listar(){
-        $sql = $this->pdo->prepare('SELECT * FROM respostas ORDER BY id_resposta');        
+    public function listar($id_pergunta){
+        $sql = $this->pdo->prepare('SELECT * FROM respostas WHERE id_pergunta = :id_pergunta ORDER BY id_resposta');        
+        $sql->bindParam(':id_pergunta',$id_pergunta);
         $sql->execute();
     
         // Pega todos os resultados da consulta
@@ -29,7 +30,7 @@ class Resposta {
 
     /**
      * Cadastra uma nova resposta
-     * @param array $dados Array contendo os dados da resposta (id_pergunta, resposta).
+     * @param array $dados Array contendo os dados da resposta (id_pergunta, resposta, correta).
      * @return int Retorna o ID da resposta recém cadastrada.
      * @example $idResposta = $obj->cadastrar($_POST);
      */
@@ -37,17 +38,19 @@ class Resposta {
     {
         $id_pergunta = $dados['id_pergunta'];
         $resposta = trim($dados['resposta']);
+        $correta = isset($dados['correta']) ? $dados['correta'] : 0; // Define 0 como padrão se não for fornecido
 
         // Prepara a query de inserção
         $sql = $this->pdo->prepare('INSERT INTO respostas 
-                                    (id_pergunta, resposta)
+                                    (id_pergunta, resposta, correta)
                                     VALUES
-                                    (:id_pergunta, :resposta)
+                                    (:id_pergunta, :resposta, :correta)
                                 ');
 
         // Faz o binding dos parâmetros
         $sql->bindParam(':id_pergunta', $id_pergunta);          
         $sql->bindParam(':resposta', $resposta);          
+        $sql->bindParam(':correta', $correta);          
 
         // Executa a query
         $sql->execute();
@@ -64,16 +67,16 @@ class Resposta {
      */
     public function mostrar(int $id_resposta)
     {
-    	// Prepara a consulta
-    	$sql = $this->pdo->prepare('SELECT * FROM respostas WHERE id_resposta = :id_resposta LIMIT 1');
+        // Prepara a consulta
+        $sql = $this->pdo->prepare('SELECT * FROM respostas WHERE id_resposta = :id_resposta LIMIT 1');
         $sql->bindParam(':id_resposta', $id_resposta);
-    	
+        
         // Executa a consulta
-    	$sql->execute();
-    	
+        $sql->execute();
+        
         // Pega os dados retornados
-    	$dados = $sql->fetch(PDO::FETCH_OBJ);
-    	
+        $dados = $sql->fetch(PDO::FETCH_OBJ);
+        
         // Retorna o objeto com os dados da resposta
         return $dados;
     }
@@ -89,17 +92,20 @@ class Resposta {
     {
         $sql = $this->pdo->prepare("UPDATE respostas SET
             id_pergunta = :id_pergunta,
-            resposta = :resposta
+            resposta = :resposta,
+            correta = :correta
         WHERE id_resposta = :id_resposta
         ");
 
         // Faz o binding dos parâmetros
         $id_pergunta = $dados['id_pergunta'];
         $resposta = trim($dados['resposta']);
+        $correta = isset($dados['correta']) ? $dados['correta'] : 0; // Define 0 como padrão se não for fornecido
         $id_resposta = $dados['id_resposta'];
 
         $sql->bindParam(':id_pergunta', $id_pergunta);
         $sql->bindParam(':resposta', $resposta);       
+        $sql->bindParam(':correta', $correta);
         $sql->bindParam(':id_resposta', $id_resposta);
 
         // Executa a consulta

@@ -3,8 +3,12 @@
 
     $Cursos = new Curso();
     $Aulas = new Aula();
+    $Quizzes = new Quiz();
+    $Perguntas = new Pergunta();
+    $Respostas = new Resposta();
 
     $curso = $Cursos->mostrar($_GET['id']);
+    $quiz = $Quizzes->mostrar($curso->id_curso);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -14,6 +18,33 @@
     <title>SkillHub - Ínicio</title>
 
     <?php include_once('link.php') ?>
+
+    <style>
+        .custom-radio .form-check-input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .custom-radio .form-check-label::before {
+            content: attr(data-letter);
+            display: inline-block;
+            width: 1.5em;
+            height: 1.5em;
+            line-height: 1.5em;
+            text-align: center;
+            border: 2px solid #0d6efd;
+            border-radius: 50%;
+            margin-right: 0.5em;
+            font-weight: bold;
+            color: #0d6efd;
+            vertical-align: middle;
+        }
+
+        .custom-radio .form-check-input:checked + .form-check-label::before {
+            background-color: #0d6efd;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
@@ -82,36 +113,53 @@
     </div>
 </div>
 
-    <div class="modal fade" id="quizModal" tabindex="-1" aria-labelledby="quizModalLabel" aria-hidden="true">
-        <form action="?" method="post">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="quizModalLabel">Questionario Curso 1</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-5 offset-1 text-center">
-                                <label for="questao1" class="form-label">Questão 1</label>
-                                <input type="text" name="questao1" id="questao1" class="form-control" required>
-                            </div>
-                            <div class="col-5 text-center">
-                                <label for="questao2" class="form-label">Questão 2</label>
-                                <select name="questao2" id="questao2" class="form-control" required>
-                                    <option value="">Selecione...</option>
-                                </select>
-                            </div>
+<div class="modal fade fs-6" id="quizModal" tabindex="-1" aria-labelledby="quizModalLabel" aria-hidden="true">
+    <form action="?" method="post">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content p-4">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quizModalLabel">Questionário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                    <?php 
+                        $n_questao = 1;
+                        $n_resposta = 1;
+                        $letras = ['A', 'B', 'C', 'D']; // Letras para as respostas
+                        foreach($Perguntas->listar($quiz->id_quiz) as $pergunta){
+                    ?>
+                        <div class="mb-3">
+                            <label class="form-label fw-bolder">Questão <?php echo "$n_questao : $pergunta->pergunta" ?></label>
+                            <?php 
+                                foreach($Respostas->listar($pergunta->id_pergunta) as $index => $resposta){ 
+                            ?>
+                                <div class="form-check custom-radio">
+                                    <input class="form-check-input" type="radio" name="questao<?php echo $n_questao; ?>" id="resposta<?php echo $n_resposta ?>" value="<?php echo $resposta->resposta ?>" required>
+                                    <label class="form-check-label" for="resposta<?php echo $n_resposta ?>" data-letter="<?php echo $letras[$index]; ?>">
+                                        <?php echo $resposta->resposta ?>
+                                    </label>
+                                </div>
+                            <?php 
+                                    $n_resposta++;
+                                } 
+                            ?>
                         </div>
-                    </div>
-                    <div class="modal-footer mt-2">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button class="btn btn-success">Enviar</button>
-                    </div>
+                    <?php 
+                            $n_questao++;
+                        }
+                    ?>
+                    
+                </div>
+                <div class="modal-footer mt-2">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success">Enviar</button>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>

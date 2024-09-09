@@ -16,8 +16,9 @@ class Quiz {
      * @return array Retorna um array de objetos contendo os dados dos quizzes.
      * @example $quizzes = $obj->listar();
      */
-    public function listar(){
-        $sql = $this->pdo->prepare('SELECT * FROM quizzes ORDER BY id_quiz');        
+    public function listar($id_curso){
+        $sql = $this->pdo->prepare('SELECT * FROM quizzes WHERE id_curso = :id_curso ORDER BY id_quiz');     
+        $sql->bindParam(':id_curso',$id_curso);   
         $sql->execute();
     
         // Pega todos os resultados da consulta

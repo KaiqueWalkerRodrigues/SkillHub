@@ -1,3 +1,12 @@
+<?php 
+    include_once('class/classes.php');
+    
+    $Usuario = new Usuario();
+
+    if(isset($_POST['btnLogar'])){
+        $Usuario->logar($_POST['usuario'],$_POST['senha']);
+    }
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -35,11 +44,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="logar_senha" class="form-label d-block text-start" style="color: #FF914D; font-weight: bold;">Senha</label>
-                            <input type="text" class="form-control" name="senha" style="background-color: lightgrey;">
+                            <input type="password" class="form-control" name="senha" style="background-color: lightgrey;">
                         </div>
                         <div class="mb-4 text-end">
                             <!-- <button type="submit" class="btn btn-orange" style="border-radius: 15px">Entrar</button> -->
-                            <a href="portal" class="btn btn-orange" style="border-radius: 15px">Entrar</a>
+                            <button type="submit" name="btnLogar" class="btn btn-orange" style="border-radius: 15px">Entrar</button>
                         </div>
 
                     </div>

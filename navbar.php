@@ -1,3 +1,6 @@
+<?php 
+  Helper::logado();
+?>
 <nav class="navbar navbar-expand-lg navbar-laranja">
   <div class="container-fluid mb-2">
     <div class="row w-100 align-items-center">
