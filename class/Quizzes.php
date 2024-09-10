@@ -119,6 +119,58 @@ class Quiz {
         $sql->execute();
     }
 
+    public function calcularNota($dados) {
+        $nota = 0;
+        $id_usuario = $dados['id_usuario'];
+        $id_quiz = $dados['id_quiz'];
+        $id_curso = $dados['id_curso'];
+        
+        // Verificar se já existe uma nota para este usuário neste quiz
+        $sqlVerifica = $this->pdo->prepare('SELECT COUNT(*) as total FROM usuarios_quizzes WHERE id_quiz = :id_quiz AND id_usuario = :id_usuario');
+        $sqlVerifica->bindParam(':id_quiz', $id_quiz);
+        $sqlVerifica->bindParam(':id_usuario', $id_usuario);
+        $sqlVerifica->execute();
+        $resultado = $sqlVerifica->fetch(PDO::FETCH_OBJ);
+
+        $url = 'location:/Skillhub/curso?id='.$id_curso;
+    
+        if ($resultado->total > 0) {
+            return header($url);
+        }
+    
+        foreach ($dados as $dado => $valor) {
+            if ($dado === 'btnEnviar' OR $dado === 'id_usuario' OR $dado === 'id_quiz' OR $dado === 'id_curso') {
+                continue;
+            }
+    
+            $n_questao = str_replace('questao', '', $dado);
+    
+            echo $n_questao . ' - ' . $valor . '<br>';
+    
+            $sql = $this->pdo->prepare('SELECT * FROM respostas WHERE id_resposta = :id_resposta LIMIT 1');
+            $sql->bindParam(':id_resposta', $valor);
+    
+            $sql->execute();
+    
+            $resposta = $sql->fetch(PDO::FETCH_OBJ);
+    
+            if ($resposta->correta == 1) {
+                $nota += 2;
+            }
+        }
+    
+        // Inserir a nota na tabela, caso não tenha sido inserida antes
+        $sql = $this->pdo->prepare("INSERT INTO usuarios_quizzes (id_quiz, id_usuario, nota) VALUES (:id_quiz, :id_usuario, :nota)");
+        $sql->bindParam(':id_quiz', $id_quiz);
+        $sql->bindParam(':id_usuario', $id_usuario);
+        $sql->bindParam(':nota', $nota);
+        $sql->execute();
+
+        return header($url);
+    }
+    
+    
+
 }
 
 ?>

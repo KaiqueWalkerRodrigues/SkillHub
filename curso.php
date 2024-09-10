@@ -7,6 +7,10 @@
     $Perguntas = new Pergunta();
     $Respostas = new Resposta();
 
+    if(isset($_POST['btnEnviar'])){
+        $Quizzes->calcularNota($_POST);
+    }
+
     $curso = $Cursos->mostrar($_GET['id']);
     $quiz = $Quizzes->mostrar($curso->id_curso);
 ?>
@@ -121,8 +125,10 @@
                     <h5 class="modal-title" id="quizModalLabel">Questionário</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <input type="hidden" name="id_curso" value="<?php echo $curso->id_curso ?>">
+                <input type="hidden" name="id_quiz" value="<?php echo $quiz->id_quiz ?>">
+                <input type="hidden" name="id_usuario" value="<?php echo $_SESSION['id_usuario'] ?>">
                 <div class="modal-body">
-                    
                     <?php 
                         $n_questao = 1;
                         $n_resposta = 1;
@@ -135,7 +141,7 @@
                                 foreach($Respostas->listar($pergunta->id_pergunta) as $index => $resposta){ 
                             ?>
                                 <div class="form-check custom-radio">
-                                    <input class="form-check-input" type="radio" name="questao<?php echo $n_questao; ?>" id="resposta<?php echo $n_resposta ?>" value="<?php echo $resposta->resposta ?>" required>
+                                    <input class="form-check-input" type="radio" name="questao<?php echo $n_questao; ?>" id="resposta<?php echo $n_resposta ?>" value="<?php echo $resposta->id_resposta ?>" required>
                                     <label class="form-check-label" for="resposta<?php echo $n_resposta ?>" data-letter="<?php echo $letras[$index]; ?>">
                                         <?php echo $resposta->resposta ?>
                                     </label>
@@ -153,7 +159,7 @@
                 </div>
                 <div class="modal-footer mt-2">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-success">Enviar</button>
+                    <button type="submit" name="btnEnviar" class="btn btn-success">Enviar</button>
                 </div>
             </div>
         </div>

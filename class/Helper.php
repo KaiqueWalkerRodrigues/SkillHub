@@ -55,7 +55,7 @@ public static function sobeArquivo($arquivo,$diretorio = '../imagens/'){
      {
       session_start();
        if(!isset($_SESSION['logado']) ){
-        header('location:/Skillhub/login?falha');
+        header('location:/Skillhub/login?erro=1');
        }
      }
 

@@ -152,21 +152,22 @@ class Usuario {
         // Verifica se o usuário foi encontrado
         if ($dados) {
             $salt = 'Skill';
-            
+
             // Verifica se a senha fornecida corresponde ao hash da senha no banco de dados
             if (crypt($senha, $salt) == $dados->senha) {
                 // Login bem-sucedido
                 // Aqui, você pode definir a sessão do usuário, por exemplo:
                 session_start();
+                $_SESSION['logado'] = true;
                 $_SESSION['usuario'] = $dados->usuario;
                 $_SESSION['id_usuario'] = $dados->id_usuario;
                 
                 return header('location:/SkillHub/portal');
             } else {
-                return header('location:/SkillHub/login?erro');
+                return header('location:/SkillHub/login?falha=1');
             }
         } else {
-            return header('location:/SkillHub/login?erro');
+            return header('location:/SkillHub/login?falha=2');
         }
     }
 

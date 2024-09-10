@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -52,7 +53,11 @@
                                     Nosso trabalho é inspirado nas Metas de Desenvolvimento Sustentável (ODS) 4 e 9, que promovem a educação inclusiva e a inovação. Acreditamos que a inclusão digital é fundamental para o desenvolvimento individual e comunitário, e estamos aqui para tornar esse processo mais acessível. Seja bem-vindo à nossa jornada de aprendizado e descubra as oportunidades que a tecnologia pode oferecer!    
                                 </p>
                                 <p style="font-weight: bolder;">Para acessar o sistema você precisa primeiramente se registrar ou logar no nosso sistema, clique no botão abaixo</p>
-                                <a href="login" class="btn btn-orange">LOGAR</a>
+                                <?php if($_SESSION['logado']){ ?>
+                                        <a href="portal" class="btn btn-orange">Voltar</a>
+                                    <?php }else{ ?> 
+                                        <a href="login" class="btn btn-orange">LOGAR</a>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

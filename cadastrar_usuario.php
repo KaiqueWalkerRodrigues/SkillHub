@@ -17,6 +17,7 @@
     <?php include_once('link.php') ?>
     <style>
         body{
+                background: linear-gradient(180deg, rgba(253,126,20,1) 0%, rgba(255,255,255,1) 100%);
                 min-height: 100vh;
                 margin: 0;
                 padding: 0;

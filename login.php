@@ -56,6 +56,36 @@
             </div>
         </form>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            // Função para obter o valor de um parâmetro na URL
+            function getParametroURL(nome) {
+                var resultados = new RegExp('[\?&]' + nome + '=([^&#]*)').exec(window.location.href);
+                if (resultados) {
+                    return resultados[1];
+                }
+                return null;
+            }
+
+            // Verifica se o parâmetro 'erro' ou 'falha' está presente na URL
+            var erro = getParametroURL('erro');
+            var falha = getParametroURL('falha');
+
+            // Se 'erro' existir e for igual a 1, exibe um alert com a mensagem
+            if (erro == 1) {
+                alert('Acesso Restrito! Efetue login para acessar');
+                var novaURL = window.location.href.split('?')[0];
+                window.history.replaceState(null, null, novaURL);
+            }
+            if (falha == 1 || Falha == 2) {
+                alert('Falha no Login, Usuário ou Senha Incorreto!');
+                var novaURL = window.location.href.split('?')[0];
+                window.history.replaceState(null, null, novaURL);
+            }
+        });
+    </script>
     
 </body>
 </html>
