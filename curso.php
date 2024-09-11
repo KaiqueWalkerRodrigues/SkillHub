@@ -169,19 +169,28 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
-    $('#videoModal').on('show.bs.modal', function (event) {
-        let button = $(event.relatedTarget);
-        let link = button.data('link');
+    $(document).ready(function() {
+        // Função para obter o valor de um parâmetro da URL
+        function getParameterByName(name) {
+            const url = new URL(window.location.href);
+            const params = new URLSearchParams(url.search);
+            return params.get(name);
+        }
 
-        // Corrige o src do iframe
-        $('#aulaVideo').attr('src', link);
-    });
+        // Verificar se a 'nota' está presente na URL
+        const nota = getParameterByName('nota');
+        if (nota) {
+            // Exibir o alerta com a nota
+            alert('Parabéns! Sua nota no quiz foi ' + nota + '/10');
 
-    $('#videoModal').on('hide.bs.modal', function () {
-        // Remove o src do iframe ao fechar o modal para parar o vídeo
-        $('#aulaVideo').attr('src', '');
+            // Remover a 'nota' da URL
+            const url = new URL(window.location.href);
+            url.searchParams.delete('nota');
+            window.history.replaceState(null, null, url); // Atualiza a URL sem recarregar a página
+        }
     });
 </script>
+
 
     
     <!-- Scripts do Bootstrap (necessário para o funcionamento do modal) -->

@@ -131,13 +131,8 @@ class Quiz {
         $sqlVerifica->bindParam(':id_usuario', $id_usuario);
         $sqlVerifica->execute();
         $resultado = $sqlVerifica->fetch(PDO::FETCH_OBJ);
-
-        $url = 'location:/Skillhub/curso?id='.$id_curso;
     
-        if ($resultado->total > 0) {
-            return header($url);
-        }
-    
+        // Processa as respostas e calcula a nota
         foreach ($dados as $dado => $valor) {
             if ($dado === 'btnEnviar' OR $dado === 'id_usuario' OR $dado === 'id_quiz' OR $dado === 'id_curso') {
                 continue;
@@ -145,11 +140,8 @@ class Quiz {
     
             $n_questao = str_replace('questao', '', $dado);
     
-            echo $n_questao . ' - ' . $valor . '<br>';
-    
             $sql = $this->pdo->prepare('SELECT * FROM respostas WHERE id_resposta = :id_resposta LIMIT 1');
             $sql->bindParam(':id_resposta', $valor);
-    
             $sql->execute();
     
             $resposta = $sql->fetch(PDO::FETCH_OBJ);
@@ -158,16 +150,25 @@ class Quiz {
                 $nota += 2;
             }
         }
-    
-        // Inserir a nota na tabela, caso não tenha sido inserida antes
-        $sql = $this->pdo->prepare("INSERT INTO usuarios_quizzes (id_quiz, id_usuario, nota) VALUES (:id_quiz, :id_usuario, :nota)");
-        $sql->bindParam(':id_quiz', $id_quiz);
-        $sql->bindParam(':id_usuario', $id_usuario);
-        $sql->bindParam(':nota', $nota);
-        $sql->execute();
 
-        return header($url);
+        $url = '/Skillhub/curso?id='.$id_curso.'&nota='.$nota;
+
+        if ($resultado->total > 0) {
+            return header('Location: ' . $url);
+        }else{
+    
+            // Inserir a nota na tabela
+            $sql = $this->pdo->prepare("INSERT INTO usuarios_quizzes (id_quiz, id_usuario, nota) VALUES (:id_quiz, :id_usuario, :nota)");
+            $sql->bindParam(':id_quiz', $id_quiz);
+            $sql->bindParam(':id_usuario', $id_usuario);
+            $sql->bindParam(':nota', $nota);
+            $sql->execute();
+
+        }
+    
+        return header('Location: ' . $url);
     }
+    
     
     
 

@@ -167,7 +167,7 @@ class Usuario {
                 return header('location:/SkillHub/login?falha=1');
             }
         } else {
-            return header('location:/SkillHub/login?falha=2');
+            return header('location:/SkillHub/login?falha=1');
         }
     }
 
