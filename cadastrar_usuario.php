@@ -1,6 +1,8 @@
 <?php 
     include_once('class/classes.php');
     
+    Helper::logado();
+
     $Usuario = new Usuario();
 
     if(isset($_POST['btnCadastrar'])){

@@ -131,6 +131,8 @@ class Quiz {
         $sqlVerifica->bindParam(':id_usuario', $id_usuario);
         $sqlVerifica->execute();
         $resultado = $sqlVerifica->fetch(PDO::FETCH_OBJ);
+
+        $gabarito = '';
     
         // Processa as respostas e calcula a nota
         foreach ($dados as $dado => $valor) {
@@ -143,6 +145,8 @@ class Quiz {
             $sql = $this->pdo->prepare('SELECT * FROM respostas WHERE id_resposta = :id_resposta LIMIT 1');
             $sql->bindParam(':id_resposta', $valor);
             $sql->execute();
+
+            $gabarito .= "$valor,";
     
             $resposta = $sql->fetch(PDO::FETCH_OBJ);
     
@@ -158,19 +162,29 @@ class Quiz {
         }else{
     
             // Inserir a nota na tabela
-            $sql = $this->pdo->prepare("INSERT INTO usuarios_quizzes (id_quiz, id_usuario, nota) VALUES (:id_quiz, :id_usuario, :nota)");
+            $sql = $this->pdo->prepare("INSERT INTO usuarios_quizzes (id_quiz, id_usuario, nota, gabarito) VALUES (:id_quiz, :id_usuario, :nota, :gabarito)");
             $sql->bindParam(':id_quiz', $id_quiz);
             $sql->bindParam(':id_usuario', $id_usuario);
             $sql->bindParam(':nota', $nota);
+            $sql->bindParam(':gabarito', $gabarito);
             $sql->execute();
 
         }
     
         return header('Location: ' . $url);
     }
+
+    public function mostrarUsuarioQuiz($id_quiz, $id_usuario) {
+        $sql = $this->pdo->prepare('SELECT * FROM usuarios_quizzes WHERE id_quiz = :id_quiz AND id_usuario = :id_usuario');
+        $sql->bindParam(':id_quiz', $id_quiz);
+        $sql->bindParam(':id_usuario', $id_usuario);
+        $sql->execute();
     
+        $dados = $sql->fetch(PDO::FETCH_OBJ);
     
-    
+        // Se não encontrar nenhum registro, retorna null
+        return $dados ? $dados : null;
+    }    
 
 }
 

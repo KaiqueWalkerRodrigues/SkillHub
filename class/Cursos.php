@@ -17,7 +17,7 @@ class Curso {
      * @example $cursos = $obj->listar();
      */
     public function listar(){
-        $sql = $this->pdo->prepare('SELECT * FROM cursos ORDER BY nome');        
+        $sql = $this->pdo->prepare('SELECT * FROM cursos ORDER BY id_curso');        
         $sql->execute();
     
         // Pega todos os resultados da consulta
