@@ -86,7 +86,7 @@
 
         .carousel-control-next.custom-carousel-control {
             right: -80px; /* Posiciona mais para fora do slide */
-    }
+        }
     </style>
 </head>
 <body>
