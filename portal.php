@@ -4,6 +4,17 @@
     Helper::logado();
 
     $Cursos = new Curso();
+    $Usuario = new Usuario();
+    $Quiz = new Quiz();
+    $Perguntas = new Pergunta();
+    $Respostas = new Resposta();
+
+    if(isset($_POST['btnEnviar'])){
+        $Usuario->corrigirQuiz($_POST);
+    }
+
+    // Verifica se já existe uma nota para o usuário
+    $nota = $Usuario->obterNota($_SESSION['id_usuario']);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -49,6 +60,8 @@
             height: 100%; /* Ocupa toda a altura do card */
             width: 100%; /* Ocupa toda a largura do card */
             object-fit: cover; /* Garante que a imagem se ajusta corretamente */
+            border: 1px solid #000000; /* Adiciona uma borda azul */
+            border-radius: 15px; /* Adiciona uma borda arredondada */
         }
         .custom-radio .form-check-input {
             position: absolute;
@@ -73,6 +86,11 @@
         .custom-radio .form-check-input:checked + .form-check-label::before {
             background-color: #0d6efd;
             color: white;
+        }
+
+        .resposta-correta {
+            color: green;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -102,16 +120,35 @@
 
         <hr>
             
-        <div>
-            <a href="#" style="text-decoration: none;" id="abrirQuiz" data-bs-toggle="modal" data-bs-target="#quizModal">
-                <h5 class="text-center">Quiz Geral</h5>
-                <div class="quiz-card curso p-3" style="width: 18rem; margin: 0 auto;">
-                    <img class="quiz-img" src="https://img.freepik.com/free-vector/speech-bubble-with-interrogation-sign-talking_24877-84070.jpg?t=st=1726667639~exp=1726671239~hmac=c2e14b1cfa970713154dac5b642d30cd83ff9195ab9cb8dd57344ab4d558a025&w=826" class="card-img-top" alt="">
+        <div class="col-6 offset-3 mt-3">
+            <div class="row">
+                <?php if (!$nota) { ?>
+                <div class="col-6 offset-3">
+                    <a href="#" style="text-decoration: none;" id="abrirQuiz" data-bs-toggle="modal" data-bs-target="#quizModal">
+                        <h5 class="text-center">Quiz Geral</h5>
+                        <div class="quiz-card curso p-3" style="width: 18rem; margin: 0 auto;">
+                            <img class="quiz-img" src="https://img.freepik.com/free-vector/speech-bubble-with-interrogation-sign-talking_24877-84070.jpg?t=st=1726667639~exp=1726671239~hmac=c2e14b1cfa970713154dac5b642d30cd83ff9195ab9cb8dd57344ab4d558a025&w=826" class="card-img-top" alt="">
+                        </div>
+                    </a>
                 </div>
-            </a>
+                <?php } ?>
+                <?php if ($nota) { ?>
+                <div class="text-center col-6 offset-3">
+                    <a href="#" style="text-decoration: none;" id="abrirRespostasCorretas" data-bs-toggle="modal" data-bs-target="#respostasModal">
+                        <h5 class="text-center">Respostas Corretas</h5>
+                        <div class="quiz-card curso p-3" style="width: 18rem; margin: 0 auto;">
+                            <img src="img/respostas.png" class="quiz-img w-85" alt="">
+                        </div>
+                    </a>
+                </div>
+                <?php } ?>
+            </div>
         </div>
+
     </div>
 
+    <!-- Modal Geral -->
+    <?php if (!$nota) { ?>
     <div class="modal fade fs-6" id="quizModal" tabindex="-1" aria-labelledby="quizModalLabel" aria-hidden="true">
         <form action="?" method="post">
             <div class="modal-dialog modal-xl">
@@ -456,7 +493,113 @@
             </div>
         </form>
     </div>
-    
+    <?php } ?>
+
+    <!-- Modal Respostas Certas -->
+    <?php if ($nota) { ?>
+    <div class="modal fade fs-6" id="respostasModal" tabindex="-1" aria-labelledby="respostasModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content p-4">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="respostasModalLabel">Respostas Corretas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?php 
+                        $n_questao = 1;
+                        $letras = ['A', 'B', 'C', 'D']; // Letras para as respostas
+                        $gabarito = [
+                            'questao1' => 'B',
+                            'questao2' => 'B',
+                            'questao3' => 'B',
+                            'questao4' => 'A',
+                            'questao5' => 'B',
+                            'questao6' => 'D',
+                            'questao7' => 'C',
+                            'questao8' => 'C',
+                            'questao9' => 'B',
+                            'questao10' => 'C'
+                        ];
+
+                        // Array com as perguntas associadas ao gabarito
+                        $perguntas = [
+                            'questao1' => 'Quais são algumas funções comuns do mouse e do teclado que facilitam o uso do computador?',
+                            'questao2' => 'O que é um sistema operacional e qual a sua função principal?',
+                            'questao3' => 'Qual é a função principal da CPU em um computador?',
+                            'questao4' => 'Qual é a sequência correta para desligar um computador?',
+                            'questao5' => 'Qual a tecla do teclado para excluir uma pasta ou arquivo?',
+                            'questao6' => 'Qual é o processo para mover uma pasta para outro local?',
+                            'questao7' => 'O que é um URL?',
+                            'questao8' => 'Como realizar uma pesquisa na internet?',
+                            'questao9' => 'Qual é a principal razão para usar senhas seguras na internet?',
+                            'questao10' => 'Qual das seguintes práticas ajuda a proteger seu computador contra vírus e malware?'
+                        ];
+
+                        // Array com as respostas fixas para cada pergunta
+                        $respostas = [
+                            'questao1' => ['Apenas clicar com o botão direito do mouse.', 'Clique simples, clique duplo, teclas de função e atalhos como Ctrl + C (copiar) e Ctrl + V (colar).', 'Arrastar e soltar somente no teclado.', 'Apertar todas as teclas ao mesmo tempo para maior eficiência.'],
+                            'questao2' => ['Um software que gerencia exclusivamente a internet.', 'Um software que gerencia o hardware do computador e fornece serviços para os programas de aplicação.', 'Um software de segurança que protege o computador contra vírus.', 'Um programa que serve apenas para rodar jogos.'],
+                            'questao3' => ['Exibir imagens e vídeos.', 'Processar informações e executar instruções.', 'Armazenar arquivos e documentos.', 'Conectar o computador à internet.'],
+                            'questao4' => ['Acessar o menu "Iniciar" e selecionar "Desligar".', 'Fechar todos os programas e desconectar da energia.', 'Pressionar o botão de energia até o computador desligar.', 'Desligar o estabilizador e depois o computador.'],
+                            'questao5' => ['Enter', 'Delete', 'Shift', 'Esc'],
+                            'questao6' => ['Arrastar e soltar a pasta no novo local desejado.', 'Clicar com o botão direito e escolher a opção "Mover para".', 'Recortar a pasta e colar no novo local.', 'Todas as alternativas anteriores.'],
+                            'questao7' => ['Um tipo de vírus de computador.', 'Um sistema operacional.', 'O endereço de um recurso na web, como uma página ou arquivo.', 'Um atalho de teclado para abrir pastas.'],
+                            'questao8' => ['Abrir o programa pesquisa do Windows e pesquisar.', 'Clicar em qualquer link disponível na tela.', 'Abrir o navegador, digitar o que deseja buscar na barra de pesquisa e pressionar Enter.', 'Fazer o download de um programa para realizar pesquisas.'],
+                            'questao9' => ['Para garantir que você consiga lembrar a senha mais facilmente.', 'Para proteger suas informações pessoais contra acessos não autorizados.', 'Para que a senha se pareça mais elegante.', 'Para que o computador fique mais rápido.'],
+                            'questao10' => ['Manter o antivírus desativado para não consumir recursos do sistema.', 'Usar um gerenciador de senhas para armazenar senhas de forma segura.', 'Atualizar o sistema operacional e o software de antivírus regularmente.', 'Desativar o firewall para permitir conexões mais rápidas.']
+                        ];
+
+                        foreach($gabarito as $questao => $respostaCorreta){
+                            // Recupera o texto da pergunta
+                            $perguntaTexto = $perguntas[$questao];
+                            $alternativas = $respostas[$questao];
+
+                            echo "<div class='mb-3'>";
+                            echo "<label class='form-label fw-bolder'>Questão $n_questao: $perguntaTexto</label>";
+
+                            foreach($alternativas as $index => $respostaTexto){
+                                // Define a classe CSS para a resposta correta
+                                $class = ($letras[$index] == $respostaCorreta) ? 'resposta-correta' : '';
+
+                                echo "<div class='form-check custom-radio $class'>";
+                                echo "<label class='form-check-label' data-letter='{$letras[$index]}'>";
+                                echo $respostaTexto;
+                                echo "</label>";
+                                echo "</div>";
+                            }
+                            echo "</div>";
+
+                            $n_questao++;
+                        }
+                    ?>
+                </div>
+                <div class="modal-footer mt-2">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php } ?>
+
+
+    </div>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+    // Captura os parâmetros da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const nota = urlParams.get('nota');
+
+    // Se a nota estiver presente, exibe o alerta
+    if (nota !== null) {
+        alert("Sua nota foi: " + nota);
+
+        // Limpa os parâmetros da URL usando o History API
+        const url = new URL(window.location);
+        url.searchParams.delete('nota');
+        window.history.replaceState({}, document.title, url.pathname);
+    }
+</script>
+
 </html>

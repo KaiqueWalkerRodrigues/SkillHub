@@ -136,6 +136,8 @@ CREATE TABLE `usuarios` (
   `senha` varchar(150) NOT NULL,
   `nome` varchar(150) NOT NULL,
   `cpf` char(11) NOT NULL,
+  `nota_quiz_geral` tinyint DEFAULT NULL,
+  `gabarito_geral` varchar(80) DEFAULT NULL,
   PRIMARY KEY (`id_usuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -146,7 +148,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'administrador','SkouAn3lDcE7c','Administrador','97928794047');
+INSERT INTO `usuarios` VALUES (1,'administrador','SkouAn3lDcE7c','Administrador','97928794047',6,'B,B,B,A,B,A,D,D,C,C,');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,4 +192,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-20 20:51:32
+-- Dump completed on 2024-10-09 23:56:09

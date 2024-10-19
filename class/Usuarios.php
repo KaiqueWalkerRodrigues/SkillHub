@@ -171,7 +171,85 @@ class Usuario {
         }
     }
 
+    public function corrigirQuiz($dados) {
+        $nota = 0;
+        $gabarito = [
+            'questao1' => 'B',
+            'questao2' => 'B',
+            'questao3' => 'B',
+            'questao4' => 'A',
+            'questao5' => 'B',
+            'questao6' => 'D',
+            'questao7' => 'C',
+            'questao8' => 'C',
+            'questao9' => 'B',
+            'questao10' => 'C'
+        ];
+    
+        $id_usuario = $dados['id_usuario'];
+    
+        // Verifica se o usuário já possui uma nota ou gabarito cadastrados
+        $sql = $this->pdo->prepare("SELECT nota_quiz_geral, gabarito_geral FROM usuarios WHERE id_usuario = :id_usuario");
+        $sql->bindParam(':id_usuario', $id_usuario);
+        $sql->execute();
+        $usuario = $sql->fetch(PDO::FETCH_OBJ);
+    
+        if ($usuario && $usuario->nota_quiz_geral !== null && $usuario->gabarito_geral !== null) {
+            // Se o usuário já possui uma nota e gabarito, exibe um alerta
+            echo "<script>alert('Você já respondeu este quiz. Não é possível enviar novamente.');</script>";
+            exit();
+        }
+    
+        // Calcula a nota
+        foreach ($gabarito as $questao => $respostaCorreta) {
+            if (isset($dados[$questao]) && $dados[$questao] == $respostaCorreta) {
+                $nota++;
+            }
+        }
+    
+        // Remove o id_usuario dos dados para não ser incluído no gabarito
+        unset($dados['id_usuario']);
+    
+        // Monta o gabarito no formato A,C,F,B,C,A,G (questões que vêm de dados)
+        $gabarito_geral = implode(',', array_values($dados));
+    
+        $sql = $this->pdo->prepare("UPDATE usuarios SET
+            nota_quiz_geral = :nota,
+            gabarito_geral = :gabarito_geral
+        WHERE id_usuario = :id_usuario");
+    
+        $sql->bindParam(':nota', $nota);
+        $sql->bindParam(':gabarito_geral', $gabarito_geral);
+        $sql->bindParam(':id_usuario', $id_usuario);
+    
+        // Executa a consulta
+        $sql->execute();
+    
+        // Redireciona com a nota como parâmetro na URL
+        header('location: /Skillhub/portal?nota=' . $nota);
+        exit();
+    }    
 
+    public function obterNota($id_usuario)
+    {
+        // Prepara a consulta para buscar a nota do usuário
+        $sql = $this->pdo->prepare('SELECT nota_quiz_geral FROM usuarios WHERE id_usuario = :id_usuario LIMIT 1');
+        $sql->bindParam(':id_usuario', $id_usuario);
+
+        // Executa a consulta
+        $sql->execute();
+
+        // Pega os dados retornados
+        $dados = $sql->fetch(PDO::FETCH_OBJ);
+
+        // Verifica se a nota foi encontrada
+        if ($dados && $dados->nota_quiz_geral !== null) {
+            return $dados->nota_quiz_geral;
+        } else {
+            return false; // Retorna false se não houver nota cadastrada
+        }
+    }
+    
 }
 
 ?>
